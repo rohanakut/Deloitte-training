@@ -1,0 +1,21 @@
+desc books;
+desc members;
+desc lendings;
+--create table books(
+--book_id number(4),
+--book_name varchar(30),
+--author varchar(30),
+--c_date date);
+
+--insert into books (book_id,book_name,author,c_date)
+--values(2,'1984','George Owell',sysdate);
+--select * from books
+--alter table books 
+--add constraint pk_bookId primary key (book_id);
+alter table lendings
+add constraint pk_lendingId primary key (id);
+alter table lendings 
+add constraint fk_lendingId foreign key(member) references members(member_id);
+alter table lendings 
+add constraint fk_bookId foreign key(books) references books(book_id);
+
