@@ -1,0 +1,456 @@
+Album SQL text File
+
+
+desc members;
+desc lendings;
+desc user_objects;
+desc user_tables;
+
+CREATE TABLE artist (
+    aid int not null,
+    name varchar(255),
+    style varchar(255)
+);
+
+CREATE TABLE songs (
+    sid int,
+    name varchar(255),
+    duration int,
+    genre varchar(255)
+);
+
+
+ALTER TABLE artist
+ADD PRIMARY KEY (aid);
+
+ALTER TABLE songs
+ADD PRIMARY KEY (sid);
+
+insert into songs values(1,'Gm',23,'relax');
+
+insert into songs values(2,'Gn',43,'sad');
+
+insert into artist VALUES(1,'jubin','chill');
+
+insert into artist values(2,'sonu','dance');
+
+select * from artist;
+
+select * from songs;
+
+alter table artist add constraint uq_name unique (name);
+
+create SEQUENCE seq3_20 
+    MINVALUE 1
+    MAXVALUE 20
+    start with 3
+    INCREMENT by 1
+    cache 20;
+    
+    
+-- use seq3_20 now instead of inserting vaules manually
+
+
+
+create SEQUENCE seq3_20 
+    MINVALUE 1
+    MAXVALUE 20
+    start with 3
+    INCREMENT by 1
+    cache 20;
+    
+    
+-- use seq3_20 now instead of inserting vaules manually
+
+
+
+-- select e.name d.mob  from employee e join department d using (department_id);
+    
+select e.employee_id,e.FIRST_NAME,m.manager_id,m.FIRST_NAME
+    from employees e, employees m
+    where m.employee_id=e.manager_id order by m.manager_id;
+
+--select e.employee_id,e.FIRST_NAME,m.manager_id,m.FIRST_NAME
+--    from employees e, employees m
+--    where e.employee_id=m.manager_id;
+
+
+desc employees;
+
+
+--Q2.
+select FIRST_NAME, HIRE_DATE from employees where HIRE_DATE between '01-JAN-2002' and '31-DEC-2005' order by hire_date;
+
+SELECT FIRST_NAME, HIRE_DATE
+   FROM employees
+   WHERE EXTRACT(YEAR FROM
+   TO_DATE(hire_date, 'DD-MON-RR')) >= 2002 
+   AND EXTRACT(YEAR FROM
+   TO_DATE(hire_date, 'DD-MON-RR')) <= 2005
+   ORDER BY hire_date;
+   
+   
+--Q3.
+desc employees;
+select FIRST_NAME,HIRE_DATE from employees where  JOB_ID='IT_PROG' OR JOB_ID='SA_REP';
+
+--Q4.
+select FIRST_NAME, HIRE_DATE from employees where EXTRACT(YEAR FROM
+   TO_DATE(hire_date, 'DD-MON-RR')) >= 2008;
+   
+--Q5.
+select * from employees where employee_id=150 or employee_id=160;
+
+--Q6.
+select FIRST_NAME, SALARY, COMMISSION_PCT, HIRE_DATE from employees where SALARY <= 10000;
+
+-Q7.
+select JOB_TITLE;
+
+
+-Q8.
+select FIRST_NAME,round(SALARY,-3) from employees
+
+
+-Q9.
+select * from JOBS order by JOB_Title desc;
+
+-Q10.
+select * from employees where FIRST_NAME LIKE 'S%' OR LAST_NAME LIKE 'S%';
+
+
+-Q11.
+select * from employees where EXTRACT(MONTH FROM
+   TO_DATE(hire_date, 'DD-MON-RR')) =5;
+   
+-Q12.
+select * from employees where COMMISSION_PCT is null and salary >=5000 and salary<=10000 and department_id =30;
+
+-Q13.
+select FIRST_NAME, EXTRACT(MONTH FROM hire_date )+1 from employees;
+
+
+-Q14.
+select FIRST_NAME, EXTRACT(YEAR FROM sysdate)-EXTRACT(YEAR FROM  hire_date) from employees;
+
+-Q15.
+select first_name from employees where EXTRACT(YEAR FROM hire_date)=2001;
+
+-Q16.
+Select INITCAP(first_name) from employees;
+
+-Q17.
+select
+   regexp_replace(
+     job_title,
+     '(((\w+)\s){1}).*',  -- Change 4 to wanted number of words here!
+     '\1'
+   ) from jobs;
+   
+   
+-Q18.
+select length(first_name) from employees where instr(last_name,'b',3) is not null;
+
+
+--Q19.
+select UPPER(first_name), lower(email) from employees where first_name=email;
+
+--Q20.
+select * from employees where EXTRACT(YEAR FROM sysdate)= EXTRACT(YEAR FROM  hire_date)
+
+--q21.
+--select  EXTRACT(YEAR FROM sysdate)-EXTRACT(YEAR FROM '01-JAN-2001') from dual; 
+select sysdate-to_date('2001-01-01','yyyy-mm-dd') from dual;
+
+--q22.
+
+
+
+--q23.
+
+select manager_id, count(employee_id)from employees group by manager_id;
+
+
+---q24.
+--select e.employee_id, j.enddate from employees e inner join JOB_HISTORY j where e.employee_id  = j.employee_id;
+select employee_id, end_date from job_history;
+
+
+--q25.
+select count(employee_id) from employees where (EXTRACT(DAY FROM  hire_date))>15 ;
+
+
+--q26
+select country_id, count(city) from locations group by country_id;
+
+
+--q27
+select avg(salary) from employees where commission_pct is not null group by department_id;
+
+--q28
+select job_id, count(employee_id), max(salary)-min(salary) from employees group by (job_id);
+
+--q29
+select job_id from employees having avg(salary)>=10000 group by job_id;
+
+--q30
+select extract(YEAR from hire_date) from employees having count (employee_id)>10 group by  extract(YEAR from hire_date);
+
+--q31
+
+
+--q32
+
+
+--q33
+select job_id ;
+
+
+--q34
+select department_id, extract(YEAR from hire_date), count(employee_id) from employees group by department_id,extract(YEAR from hire_date);
+
+
+
+--q35
+select department_id,manager_id from employees group by manager_id,department_id having count(employee_id)>5;
+
+--q40
+select department_name,count(employee_id) from departments,employees 
+where departments.department_id = employees.department_id group by department_name; 
+
+--q42
+select d.department_name, e.first_name from departments d,employees e where d.manager_id=e.employee_id;
+
+--q43 not done
+selectd d.departmentname, e.first_name, l.city from
+department d, employees e, locations l where e.employee_id=d.manager_id and  d.location_id = l.location_id;
+
+--q44
+select c.country_name,l.city,d.department_name from COUNTRIES c,DEPARTMENTS d, LOCATIONS l
+where c.COUNTRY_ID=l.country_id and l.location_id = d.location_id;
+
+--q45
+
+--q46
+
+--q47
+
+--q48
+
+--q49
+
+--q50
+select d.Department_name, e.first_name, e.salary from Departments d, Employees e 
+ where d.manager_id=e.manager_id and EXTRACT(YEAR FROM sysdate)-EXTRACT(YEAR FROM  e.hire_date)>=5;
+ 
+ 
+-- q51
+select e.first_name from employees e, employees b where e.manager_id=b.employee_id and e.hire_date>b.hire_date; 
+
+--q52
+select e.first_name, j.job_title from employees e, job_history jh, jobs j
+where  e.job_id=j.job_title and jh.start_date-jh.end_date >180;
+
+--q53
+select e.first_name     
+	
+	
+	
+	
+	
+	
+	---------------------------------------------------------------------------------------------------------------
+	
+	
+	Name      Null?    Type         
+--------- -------- ------------ 
+ID        NOT NULL NUMBER(4)    
+NAME               VARCHAR2(20) 
+EMAIL              VARCHAR2(20) 
+JOIN_DATE          DATE         
+Name      Null?    Type         
+--------- -------- ------------ 
+ID        NOT NULL NUMBER(4)    
+MEMBER    NOT NULL NUMBER       
+BOOK               VARCHAR2(20) 
+LENDED_ON          DATE         
+Name              Null? Type          
+----------------- ----- ------------- 
+OBJECT_NAME             VARCHAR2(128) 
+SUBOBJECT_NAME          VARCHAR2(128) 
+OBJECT_ID               NUMBER        
+DATA_OBJECT_ID          NUMBER        
+OBJECT_TYPE             VARCHAR2(23)  
+CREATED                 DATE          
+LAST_DDL_TIME           DATE          
+TIMESTAMP               VARCHAR2(19)  
+STATUS                  VARCHAR2(7)   
+TEMPORARY               VARCHAR2(1)   
+GENERATED               VARCHAR2(1)   
+SECONDARY               VARCHAR2(1)   
+NAMESPACE               NUMBER        
+EDITION_NAME            VARCHAR2(128) 
+SHARING                 VARCHAR2(18)  
+EDITIONABLE             VARCHAR2(1)   
+ORACLE_MAINTAINED       VARCHAR2(1)   
+APPLICATION             VARCHAR2(1)   
+DEFAULT_COLLATION       VARCHAR2(100) 
+DUPLICATED              VARCHAR2(1)   
+SHARDED                 VARCHAR2(1)   
+CREATED_APPID           NUMBER        
+CREATED_VSNID           NUMBER        
+MODIFIED_APPID          NUMBER        
+MODIFIED_VSNID          NUMBER        
+Name                      Null?    Type           
+------------------------- -------- -------------- 
+TABLE_NAME                NOT NULL VARCHAR2(128)  
+TABLESPACE_NAME                    VARCHAR2(30)   
+CLUSTER_NAME                       VARCHAR2(128)  
+IOT_NAME                           VARCHAR2(128)  
+STATUS                             VARCHAR2(8)    
+PCT_FREE                           NUMBER         
+PCT_USED                           NUMBER         
+INI_TRANS                          NUMBER         
+MAX_TRANS                          NUMBER         
+INITIAL_EXTENT                     NUMBER         
+NEXT_EXTENT                        NUMBER         
+MIN_EXTENTS                        NUMBER         
+MAX_EXTENTS                        NUMBER         
+PCT_INCREASE                       NUMBER         
+FREELISTS                          NUMBER         
+FREELIST_GROUPS                    NUMBER         
+LOGGING                            VARCHAR2(3)    
+BACKED_UP                          VARCHAR2(1)    
+NUM_ROWS                           NUMBER         
+BLOCKS                             NUMBER         
+EMPTY_BLOCKS                       NUMBER         
+AVG_SPACE                          NUMBER         
+CHAIN_CNT                          NUMBER         
+AVG_ROW_LEN                        NUMBER         
+AVG_SPACE_FREELIST_BLOCKS          NUMBER         
+NUM_FREELIST_BLOCKS                NUMBER         
+DEGREE                             VARCHAR2(10)   
+INSTANCES                          VARCHAR2(10)   
+CACHE                              VARCHAR2(5)    
+TABLE_LOCK                         VARCHAR2(8)    
+SAMPLE_SIZE                        NUMBER         
+LAST_ANALYZED                      DATE           
+PARTITIONED                        VARCHAR2(3)    
+IOT_TYPE                           VARCHAR2(12)   
+TEMPORARY                          VARCHAR2(1)    
+SECONDARY                          VARCHAR2(1)    
+NESTED                             VARCHAR2(3)    
+BUFFER_POOL                        VARCHAR2(7)    
+FLASH_CACHE                        VARCHAR2(7)    
+CELL_FLASH_CACHE                   VARCHAR2(7)    
+ROW_MOVEMENT                       VARCHAR2(8)    
+GLOBAL_STATS                       VARCHAR2(3)    
+USER_STATS                         VARCHAR2(3)    
+DURATION                           VARCHAR2(15)   
+SKIP_CORRUPT                       VARCHAR2(8)    
+MONITORING                         VARCHAR2(3)    
+CLUSTER_OWNER                      VARCHAR2(128)  
+DEPENDENCIES                       VARCHAR2(8)    
+COMPRESSION                        VARCHAR2(8)    
+COMPRESS_FOR                       VARCHAR2(30)   
+DROPPED                            VARCHAR2(3)    
+READ_ONLY                          VARCHAR2(3)    
+SEGMENT_CREATED                    VARCHAR2(3)    
+RESULT_CACHE                       VARCHAR2(7)    
+CLUSTERING                         VARCHAR2(3)    
+ACTIVITY_TRACKING                  VARCHAR2(23)   
+DML_TIMESTAMP                      VARCHAR2(25)   
+HAS_IDENTITY                       VARCHAR2(3)    
+CONTAINER_DATA                     VARCHAR2(3)    
+INMEMORY                           VARCHAR2(8)    
+INMEMORY_PRIORITY                  VARCHAR2(8)    
+INMEMORY_DISTRIBUTE                VARCHAR2(15)   
+INMEMORY_COMPRESSION               VARCHAR2(17)   
+INMEMORY_DUPLICATE                 VARCHAR2(13)   
+DEFAULT_COLLATION                  VARCHAR2(100)  
+DUPLICATED                         VARCHAR2(1)    
+SHARDED                            VARCHAR2(1)    
+EXTERNAL                           VARCHAR2(3)    
+CELLMEMORY                         VARCHAR2(24)   
+CONTAINERS_DEFAULT                 VARCHAR2(3)    
+CONTAINER_MAP                      VARCHAR2(3)    
+EXTENDED_DATA_LINK                 VARCHAR2(3)    
+EXTENDED_DATA_LINK_MAP             VARCHAR2(3)    
+INMEMORY_SERVICE                   VARCHAR2(12)   
+INMEMORY_SERVICE_NAME              VARCHAR2(1000) 
+CONTAINER_MAP_OBJECT               VARCHAR2(3)    
+MEMOPTIMIZE_READ                   VARCHAR2(8)    
+MEMOPTIMIZE_WRITE                  VARCHAR2(8)    
+HAS_SENSITIVE_COLUMN               VARCHAR2(3)    
+
+Error starting at line : 6 in command -
+CREATE TABLE artist (
+    aid int not null,
+    name varchar(255),
+    style varchar(255),
+)
+Error report -
+ORA-00904: : invalid identifier
+00904. 00000 -  "%s: invalid identifier"
+*Cause:    
+*Action:
+
+Table ARTIST created.
+
+
+Table SONGS created.
+
+
+Error starting at line : 21 in command -
+ADD PRIMARY KEY (aid
+Error report -
+Unknown Command
+
+
+Table ARTIST altered.
+
+
+Table SONGS altered.
+
+
+1 row inserted.
+
+
+1 row inserted.
+
+
+1 row inserted.
+
+
+1 row inserted.
+
+
+Error starting at line : 38 in command -
+alter table artist add constraint uq_name unique (email)
+Error report -
+ORA-00904: "EMAIL": invalid identifier
+00904. 00000 -  "%s: invalid identifier"
+*Cause:    
+*Action:
+
+Table ARTIST altered.
+
+
+Sequence SEQ320 created.
+
+
+Error starting at line : 40 in command -
+create SEQUENCE seq320 
+    MINVALUE 1
+    MAXVALUE 20
+    start with 3
+    INCREMENT by 1
+    cache 20
+Error report -
+ORA-00955: name is already used by an existing object
+00955. 00000 -  "name is already used by an existing object"
+*Cause:    
+*Action:
+
+Sequence SEQ3_20 created.
+

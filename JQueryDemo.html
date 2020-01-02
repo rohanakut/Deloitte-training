@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <h1>Welcome To Web Querries</h1>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+			integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+            
+
+            <p id="message"></p>
+            <button id="show">Show</button>
+            <button id="hide">Hide</button>
+            <button id="slide">Slide</button>
+
+
+
+            <script>
+                // Method 1
+                // $("#hide").click(hideMsg);
+
+                // function hideMsg() {
+                //     $("h1").hide();
+                // }
+
+                // Method 2
+                $("#hide").click(function () {
+                   $("h1").hide(3000, function () {
+                       $("#message").html("Message Hidden.")
+                   }); 
+                });
+                
+
+                $("#slide").click(function () {
+                   $("h1").slideUp(3000).slideDown(3000)
+                });
+                // $("#id")  --Mostly used
+                // $(".class")
+            </script>
+
+
+</body>
+</html>

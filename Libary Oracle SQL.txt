@@ -1,0 +1,239 @@
+create table books(id int, book_name varchar2 (20),isbn int)
+create table members(id NUMBER(4), name varchar2(20), email VARCHAR(20),join_date date)
+show tables;
+desc books
+desc members;
+insert INTO books values(100,'Harry Potter',1234);
+insert INTO books values(101,'Chronicles',1412);
+select * from books;
+insert into members values(123,'Raj','chinma@h.com',sysdate);
+select * from members;
+create table lendings(id number(4), member varchar2(20), book varchar2(20), lended_on date);
+alter table books modify id int NOT NULL
+alter table books add constraint pk_bookid primary key(id)
+desc books
+alter table members add constraint pk_memberid primary key(id)
+alter table lendings add constraint pk_lendid primary key(id)
+desc lendings;
+desc members;
+select * from members;
+delete from members
+
+alter table lendings add  CONSTRAINT fk_member FOREIGN KEY (member)
+    REFERENCES members(id)
+    
+    desc lendings
+    
+    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	------------------------------------------------------------------------------------------
+	
+	
+Table BOOKS created.
+
+
+Table MEMBERS created.
+
+Show tables handled. 
+Name      Null? Type         
+--------- ----- ------------ 
+ID              NUMBER(38)   
+BOOK_NAME       VARCHAR2(20) 
+ISBN            NUMBER(38)   
+Name      Null? Type         
+--------- ----- ------------ 
+ID              NUMBER(4)    
+NAME            VARCHAR2(20) 
+EMAIL           VARCHAR2(20) 
+JOIN_DATE       DATE         
+
+1 row inserted.
+
+
+Error starting at line : 6 in command -
+insert INTO books values(100,'Harry Potter',1234)
+insert INTO books values(101,'Chronicles',1412)
+Error at Command Line : 7 Column : 8
+Error report -
+SQL Error: ORA-00933: SQL command not properly ended
+00933. 00000 -  "SQL command not properly ended"
+*Cause:    
+*Action:
+
+1 row inserted.
+
+
+1 row inserted.
+
+
+Error starting at line : 9 in command -
+insert into memebers values(123,'Raj','chinma@h.com',TO_DATE('2003/05/03 21:02:44', 'yyyy/mm/dd hh24:mi:ss'))
+Error at Command Line : 9 Column : 13
+Error report -
+SQL Error: ORA-00942: table or view does not exist
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Error starting at line : 9 in command -
+insert into memebers values(123,'Raj','chinma@h.com',TO_DATE('1994/12/16 12:00:00', 'yyyy/mm/dd hh:mi:ss'))
+Error at Command Line : 9 Column : 13
+Error report -
+SQL Error: ORA-00942: table or view does not exist
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Error starting at line : 9 in command -
+insert into memebers values(123,'Raj','chinma@h.com',sysdate)
+Error at Command Line : 9 Column : 13
+Error report -
+SQL Error: ORA-00942: table or view does not exist
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Error starting at line : 9 in command -
+insert into memebers values(123,'Raj','chinma@h.com',sysdate)
+Error at Command Line : 9 Column : 13
+Error report -
+SQL Error: ORA-00942: table or view does not exist
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+1 row inserted.
+
+
+Table LENDINGS created.
+
+
+Error starting at line : 12 in command -
+alter table books add constraints pk_bookid primary key(book_id)
+Error report -
+ORA-00904: "BOOK_ID": invalid identifier
+00904. 00000 -  "%s: invalid identifier"
+*Cause:    
+*Action:
+
+Error starting at line : 12 in command -
+alter table books add constraint pk_bookid primary key(book_id)
+Error report -
+ORA-00904: "BOOK_ID": invalid identifier
+00904. 00000 -  "%s: invalid identifier"
+*Cause:    
+*Action:
+
+Error starting at line : 12 in command -
+alter table books add constraint pk_bookid primary key(id)
+Error report -
+ORA-02437: cannot validate (HR.PK_BOOKID) - primary key violated
+02437. 00000 -  "cannot validate (%s.%s) - primary key violated"
+*Cause:    attempted to validate a primary key with duplicate values or null
+           values.
+*Action:   remove the duplicates and null values before enabling a primary
+           key.
+
+Table BOOKS altered.
+
+
+Error starting at line : 13 in command -
+alter table books add constraint pk_bookid primary key(id)
+Error report -
+ORA-02437: cannot validate (HR.PK_BOOKID) - primary key violated
+02437. 00000 -  "cannot validate (%s.%s) - primary key violated"
+*Cause:    attempted to validate a primary key with duplicate values or null
+           values.
+*Action:   remove the duplicates and null values before enabling a primary
+           key.
+Name      Null?    Type         
+--------- -------- ------------ 
+ID        NOT NULL NUMBER(38)   
+BOOK_NAME          VARCHAR2(20) 
+ISBN               NUMBER(38)   
+
+Table MEMBERS altered.
+
+
+Table LENDINGS altered.
+
+Name      Null?    Type         
+--------- -------- ------------ 
+ID        NOT NULL NUMBER(4)    
+MEMBER             VARCHAR2(20) 
+BOOK               VARCHAR2(20) 
+LENDED_ON          DATE         
+Name      Null?    Type         
+--------- -------- ------------ 
+ID        NOT NULL NUMBER(4)    
+NAME               VARCHAR2(20) 
+EMAIL              VARCHAR2(20) 
+JOIN_DATE          DATE         
+
+Error starting at line : 19 in command -
+alter table lendings add  CONSTRAINT fk_member FOREIGN KEY (member)
+    REFERENCES members(id)
+Error report -
+ORA-02267: column type incompatible with referenced column type
+02267. 00000 -  "column type incompatible with referenced column type"
+*Cause:    The data type or collation of the referencing column was
+           incompatible with the data type or collation of the referenced
+           column.
+*Action:   Select a compatible data type for the referencing column.
+           Also, the collation of a character column in a foreign key must
+           match the collation of the corresponding column in the primary
+           key.
+
+Error starting at line : 19 in command -
+alter table members modify member int
+Error report -
+ORA-00904: "MEMBER": invalid identifier
+00904. 00000 -  "%s: invalid identifier"
+*Cause:    
+*Action:
+
+1 row deleted.
+
+
+Error starting at line : 21 in command -
+alter table members modify member int
+Error report -
+ORA-00904: "MEMBER": invalid identifier
+00904. 00000 -  "%s: invalid identifier"
+*Cause:    
+*Action:
+Name      Null?    Type         
+--------- -------- ------------ 
+ID        NOT NULL NUMBER(4)    
+NAME               VARCHAR2(20) 
+EMAIL              VARCHAR2(20) 
+JOIN_DATE          DATE         
+
+Table LENDINGS altered.
+
+Name      Null?    Type         
+--------- -------- ------------ 
+ID        NOT NULL NUMBER(4)    
+MEMBER    NOT NULL NUMBER       
+BOOK               VARCHAR2(20) 
+LENDED_ON          DATE         
+
+	
