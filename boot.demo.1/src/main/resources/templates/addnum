@@ -1,0 +1,9 @@
+<html>
+<body>
+
+</body>
+<h1 th:inline="text">[[${num1}]] + [[${num2}]]  </h1>
+
+
+
+</html>
